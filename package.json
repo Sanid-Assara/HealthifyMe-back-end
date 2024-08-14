@@ -1,0 +1,23 @@
+{
+  "name": "healthifyme-back-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node -r dotenv/config index.js",
+    "dev": "node -r dotenv/config --watch  index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.3",
+    "pg": "^8.12.0"
+  }
+}
