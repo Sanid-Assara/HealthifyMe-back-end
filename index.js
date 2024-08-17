@@ -4,6 +4,7 @@ import connectToDatabase from "./db/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import userRoutes from "./routes/userRoutes.js";
 import foodRoutes from "./routes/foodRoutes.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 8080;
@@ -19,6 +20,7 @@ app.use(express.json());
 
 app.use("/API/users", userRoutes);
 app.use("/API/foods", foodRoutes);
+app.use("/API/recipes", recipeRoutes);
 
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
@@ -30,7 +32,7 @@ const startServer = async () => {
 
     app.listen(PORT, () =>
       console.log(
-        `Servers are running on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods`
+        `\n Servers are running on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods  \n http://localhost:${PORT}/API/recipes`
       )
     );
   } catch (error) {
