@@ -3,6 +3,7 @@ import cors from "cors";
 import connectToDatabase from "./db/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import userRoutes from "./routes/userRoutes.js";
+import foodRoutes from "./routes/foodRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 8080;
@@ -17,6 +18,7 @@ app.use(
 app.use(express.json());
 
 app.use("/API/users", userRoutes);
+app.use("/API/foods", foodRoutes);
 
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
@@ -27,7 +29,9 @@ const startServer = async () => {
     await connectToDatabase();
 
     app.listen(PORT, () =>
-      console.log(`Server running on http://localhost:${PORT}/API/users`)
+      console.log(
+        `Servers are running on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods`
+      )
     );
   } catch (error) {
     console.error("Server failed to start due to DB connection error", error);

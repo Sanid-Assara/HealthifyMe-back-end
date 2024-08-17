@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    res.send("get request for a user");
+    res.send("get request for a single user");
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
