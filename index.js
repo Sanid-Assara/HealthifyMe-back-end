@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import connectToDatabase from "./db/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import userRoutes from "./routes/userRoutes.js";
+import foodRoutes from "./routes/foodRoutes.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 8080;
@@ -15,9 +18,10 @@ app.use(
 );
 app.use(express.json());
 
-app.get("/", (req, res) =>
-  res.send("Hello, World! - from HealthifyMe Backend")
-);
+app.use("/API/users", userRoutes);
+app.use("/API/foods", foodRoutes);
+app.use("/API/recipes", recipeRoutes);
+
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 app.use(errorHandler);
@@ -27,7 +31,9 @@ const startServer = async () => {
     await connectToDatabase();
 
     app.listen(PORT, () =>
-      console.log(`Server running on http://localhost:${PORT}`)
+      console.log(
+        `\n Servers are running on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods  \n http://localhost:${PORT}/API/recipes`
+      )
     );
   } catch (error) {
     console.error("Server failed to start due to DB connection error", error);
