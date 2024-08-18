@@ -1,4 +1,7 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import favicon from "serve-favicon";
 import cors from "cors";
 import connectToDatabase from "./db/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
@@ -6,8 +9,14 @@ import userRoutes from "./routes/userRoutes.js";
 import foodRoutes from "./routes/foodRoutes.js";
 import recipeRoutes from "./routes/recipeRoutes.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = process.env.PORT ?? 8080;
+
+app.use(favicon(path.join(__dirname, "public", "tabicon.png")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
