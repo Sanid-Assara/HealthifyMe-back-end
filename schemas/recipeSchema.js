@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const RecipeSchema = new mongoose.Schema({
+const recipeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -71,4 +71,4 @@ const RecipeSchema = new mongoose.Schema({
   },
 });
 
-export default RecipeSchema;
+export default recipeSchema;

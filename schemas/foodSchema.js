@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const FoodSchema = new mongoose.Schema({
+const foodSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -46,4 +46,4 @@ const FoodSchema = new mongoose.Schema({
   },
 });
 
-export default FoodSchema;
+export default foodSchema;
