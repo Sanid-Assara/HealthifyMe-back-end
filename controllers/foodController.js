@@ -3,7 +3,10 @@ import Food from "../models/foodModel.js";
 export const getFoods = async (req, res) => {
   try {
     let foods;
-    foods = await Food.find().populate("addedBy", "username");
+    foods = await Food.find().populate({
+      path: "addedBy",
+      select: "username",
+    });
     res.json(foods);
   } catch (error) {
     res.status(500).json({ error: error.message });

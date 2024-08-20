@@ -58,4 +58,12 @@ const userSchema = new Schema({
   },
 });
 
+// userSchema.index(
+//   { username: 1 },
+//   { name: "username_unique_index", unique: true }
+// );
+// userSchema.index({ email: 1 }, { name: "email_unique_index", unique: true });
+userSchema.index({ savedRecipes: 1 }, { name: "savedRecipes_index" });
+userSchema.index({ addedRecipes: 1 }, { name: "addedRecipes_index" });
+
 export default userSchema;

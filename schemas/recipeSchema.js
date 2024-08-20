@@ -21,8 +21,16 @@ const recipeSchema = new Schema({
         required: true,
       },
       unit: {
-        type: String, // 'grams', 'cups'
+        type: String,
         required: true,
+        enum: [
+          "grams",
+          "cups",
+          "tablespoons",
+          "teaspoons",
+          "liters",
+          "milliliters",
+        ],
       },
     },
   ],
@@ -70,5 +78,9 @@ const recipeSchema = new Schema({
     default: Date.now,
   },
 });
+
+recipeSchema.index({ addedBy: 1 });
+recipeSchema.index({ name: 1 });
+recipeSchema.index({ sharedWithCommunity: 1 });
 
 export default recipeSchema;

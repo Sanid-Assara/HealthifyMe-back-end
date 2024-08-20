@@ -46,4 +46,6 @@ const foodSchema = new Schema({
   },
 });
 
+foodSchema.index({ addedBy: 1 });
+
 export default foodSchema;
