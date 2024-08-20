@@ -10,7 +10,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   try {
     res.send("post request for a user");
   } catch (error) {
@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     res.send("get request for a single user");
   } catch (error) {
@@ -26,7 +26,7 @@ const getUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     res.send("put request for a user");
   } catch (error) {
@@ -34,7 +34,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     res.send("delete request for a user");
   } catch (error) {
