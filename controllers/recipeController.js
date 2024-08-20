@@ -4,8 +4,14 @@ import Food from "../models/foodModel.js";
 export const getRecipes = async (req, res) => {
   try {
     let recipes = await Recipe.find()
-      .populate("ingredients.foodItem", "name")
-      .populate("addedBy", "username");
+      .populate({
+        path: "ingredients.foodItem",
+        select: "name imageUrl",
+      })
+      .populate({
+        path: "addedBy",
+        select: "username profilePicture",
+      });
     res.json(recipes);
   } catch (error) {
     res.status(500).json({ error: error.message });
