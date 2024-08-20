@@ -12,7 +12,33 @@ export const getUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    res.send("post request for a user");
+    const {
+      username,
+      email,
+      password,
+      profilePicture,
+      dietaryPreferences,
+      location,
+    } = req.body;
+
+    if (!username || !email || !password) {
+      return res
+        .status(400)
+        .json({ error: "Username, email, and password are required" });
+    }
+
+    const newUser = new User({
+      username,
+      email,
+      password,
+      profilePicture,
+      dietaryPreferences,
+      location,
+    });
+
+    const result = await newUser.save();
+
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -20,7 +46,10 @@ export const createUser = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    res.send("get request for a single user");
+    const { id } = req.params;
+    const result = await User.findById(id);
+    if (!result) return res.status(404).json({ error: "User not found" });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -28,7 +57,35 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    res.send("put request for a user");
+    const { id } = req.params;
+    const {
+      username,
+      email,
+      password,
+      profilePicture,
+      dietaryPreferences,
+      location,
+    } = req.body;
+
+    if (!username || !email || !password) {
+      return res
+        .status(400)
+        .json({ error: "Username, email, and password are required" });
+    }
+
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    user.username = username;
+    user.email = email;
+    user.password = password;
+    user.profilePicture = profilePicture;
+    user.dietaryPreferences = dietaryPreferences;
+    user.location = location;
+
+    await user.save();
+
+    res.json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -36,7 +93,10 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    res.send("delete request for a user");
+    const { id } = req.params;
+    const result = await User.findByIdAndDelete(id);
+    if (!result) return res.status(404).json({ error: "User not found" });
+    res.json({ message: "User deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
