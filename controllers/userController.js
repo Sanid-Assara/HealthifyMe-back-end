@@ -45,8 +45,11 @@ export const createUser = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
+  const { id } = req.params;
   try {
-    res.send("get request for a single user");
+    const result = await User.findById(id);
+    if (!result) return res.status(404).json({ error: "User not found" });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
