@@ -53,7 +53,7 @@ export const createUser = async (req, res) => {
       .populate("addedRecipes")
       .populate("messages.from");
 
-    res.status(200).json(result);
+    res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -136,7 +136,21 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    //
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(400).json({ error: "Invalid email or password" });
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Invalid email or password" });
+
+    // Generate JWT
+    const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
+      expiresIn: "1h",
+    });
+    res.cookie("token", token, { httpOnly: true });
+    res.json({ message: "Login successful" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
