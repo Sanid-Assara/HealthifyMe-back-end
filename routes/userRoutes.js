@@ -7,7 +7,7 @@ import {
   deleteUser,
   logout,
   login,
-  protectedUser,
+  getProfile,
 } from "../controllers/userController.js";
 
 const userRoutes = express.Router();
@@ -16,7 +16,7 @@ userRoutes.get("/", getUsers);
 userRoutes.post("/", createUser);
 userRoutes.post("/login", login);
 userRoutes.post("/logout", logout);
-userRoutes.get("/protected", protectedUser);
+userRoutes.get("/profile", getProfile);
 userRoutes.get("/:id", getUser);
 userRoutes.put("/:id", updateUser);
 userRoutes.delete("/:id", deleteUser);

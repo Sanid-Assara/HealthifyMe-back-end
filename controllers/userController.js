@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const getUsers = async (req, res) => {
   try {
@@ -27,6 +30,9 @@ export const createUser = async (req, res) => {
       addedRecipes,
       messages,
     } = req.body;
+
+    const found = await User.findOne({ email });
+    if (found) throw new Error("User already exist");
 
     if (!username || !email || !password) {
       return res
@@ -137,12 +143,11 @@ export const login = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ error: "Invalid email or password" });
 
-    // Generate JWT
-    const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     res.cookie("token", token, { httpOnly: true });
-    res.json({ message: "Login successful" });
+    res.json({ message: "Login successful", token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -153,15 +158,16 @@ export const logout = (req, res) => {
   res.json({ message: "Logout successful" });
 };
 
-export const protectedUser = async (req, res) => {
+export const getProfile = async (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ error: "Unauthorized" });
 
   try {
-    const verified = jwt.verify(token, "your_jwt_secret");
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
     res.json({
       message: "You are authorized to this protected route",
       userId: verified.id,
+      email: verified.email,
     });
   } catch (error) {
     res.status(401).json({ error: "Unauthorized" });
