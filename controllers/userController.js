@@ -149,10 +149,8 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  (req, res) => {
-    res.clearCookie("token");
-    res.json({ message: "Logout successful" });
-  };
+  res.clearCookie("token");
+  res.json({ message: "Logout successful" });
 };
 
 export const protectedUser = async (req, res) => {
@@ -161,7 +159,10 @@ export const protectedUser = async (req, res) => {
 
   try {
     const verified = jwt.verify(token, "your_jwt_secret");
-    res.json({ message: "This is a protected route", userId: verified.id });
+    res.json({
+      message: "You are authorized to this protected route",
+      userId: verified.id,
+    });
   } catch (error) {
     res.status(401).json({ error: "Unauthorized" });
   }

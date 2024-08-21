@@ -41,7 +41,7 @@ const startServer = async () => {
 
     app.listen(PORT, () =>
       console.log(
-        `\n Servers are running on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods  \n http://localhost:${PORT}/API/recipes`
+        `\n Servers are running locally on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods  \n http://localhost:${PORT}/API/recipes \n http://localhost:8080/API/users/protected \n\n Servers are running online on \n https://healthifyme-api.onrender.com/API/users \n https://healthifyme-api.onrender.com/API/foods  \n https://healthifyme-api.onrender.com/API/recipes \n https://healthifyme-api.onrender.com/API/protected`
       )
     );
   } catch (error) {

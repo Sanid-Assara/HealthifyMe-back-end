@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-const hashPassword = async function (next) {
+const passwordHash = async function (next) {
   if (!this.isModified("password")) return next();
   try {
     const salt = await bcrypt.genSalt(10);
@@ -11,4 +11,4 @@ const hashPassword = async function (next) {
   }
 };
 
-export default hashPassword;
+export default passwordHash;
