@@ -126,14 +126,6 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-export const signup = async (req, res) => {
-  try {
-    //
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -154,6 +146,13 @@ export const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+};
+
+export const logout = (req, res) => {
+  (req, res) => {
+    res.clearCookie("token");
+    res.json({ message: "Logout successful" });
+  };
 };
 
 export const protectedUser = async (req, res) => {
