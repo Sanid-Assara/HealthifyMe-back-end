@@ -61,6 +61,10 @@ const userSchema = new Schema({
 
 userSchema.pre("save", hashPassword);
 
+userSchema.methods.comparePassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
 // userSchema.index(
 //   { username: 1 },
 //   { name: "username_unique_index", unique: true }
