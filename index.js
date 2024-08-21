@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import favicon from "serve-favicon";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import connectToDatabase from "./db/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -11,13 +12,11 @@ import recipeRoutes from "./routes/recipeRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const app = express();
 const PORT = process.env.PORT ?? 8080;
 
-app.use(favicon(path.join(__dirname, "public", "tabicon.png")));
-app.use(express.static(path.join(__dirname, "public")));
-
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -25,12 +24,13 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
+
+app.use(favicon(path.join(__dirname, "public", "tabicon.png")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/API/users", userRoutes);
 app.use("/API/foods", foodRoutes);
 app.use("/API/recipes", recipeRoutes);
-
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 app.use(errorHandler);
@@ -41,7 +41,7 @@ const startServer = async () => {
 
     app.listen(PORT, () =>
       console.log(
-        `\n Servers are running on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods  \n http://localhost:${PORT}/API/recipes`
+        `\n Servers are running locally on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/foods  \n http://localhost:${PORT}/API/recipes \n http://localhost:8080/API/users/protected \n\n Servers are running online on \n https://healthifyme-api.onrender.com/API/users \n https://healthifyme-api.onrender.com/API/foods  \n https://healthifyme-api.onrender.com/API/recipes \n https://healthifyme-api.onrender.com/API/protected`
       )
     );
   } catch (error) {

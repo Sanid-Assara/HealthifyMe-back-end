@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 export const getUsers = async (req, res) => {
@@ -52,7 +53,7 @@ export const createUser = async (req, res) => {
       .populate("addedRecipes")
       .populate("messages.from");
 
-    res.status(200).json(result);
+    res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -122,5 +123,47 @@ export const deleteUser = async (req, res) => {
     res.json({ message: "User deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(400).json({ error: "Invalid email or password" });
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Invalid email or password" });
+
+    // Generate JWT
+    const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
+      expiresIn: "1h",
+    });
+    res.cookie("token", token, { httpOnly: true });
+    res.json({ message: "Login successful" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const logout = (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logout successful" });
+};
+
+export const protectedUser = async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ error: "Unauthorized" });
+
+  try {
+    const verified = jwt.verify(token, "your_jwt_secret");
+    res.json({
+      message: "You are authorized to this protected route",
+      userId: verified.id,
+    });
+  } catch (error) {
+    res.status(401).json({ error: "Unauthorized" });
   }
 };

@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import hashPassword from "../middlewares/hashPassword.js";
+import bcrypt from "bcryptjs";
+
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
@@ -57,6 +60,12 @@ const userSchema = new Schema({
     default: Date.now,
   },
 });
+
+userSchema.pre("save", hashPassword);
+
+userSchema.methods.comparePassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
 
 // userSchema.index(
 //   { username: 1 },
