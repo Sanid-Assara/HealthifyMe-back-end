@@ -124,3 +124,19 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const signup = async (req, res) => {
+  try {
+    //
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    //
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
