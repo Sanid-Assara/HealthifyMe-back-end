@@ -156,9 +156,13 @@ export const logout = (req, res) => {
 };
 
 export const protectedUser = async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ error: "Unauthorized" });
+
   try {
-    //
+    const verified = jwt.verify(token, "your_jwt_secret");
+    res.json({ message: "This is a protected route", userId: verified.id });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(401).json({ error: "Unauthorized" });
   }
 };
