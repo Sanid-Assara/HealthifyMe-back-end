@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 export const getUsers = async (req, res) => {
@@ -134,6 +135,14 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  try {
+    //
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const protectedUser = async (req, res) => {
   try {
     //
   } catch (error) {

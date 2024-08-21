@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import favicon from "serve-favicon";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import connectToDatabase from "./db/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import userRoutes from "./routes/userRoutes.js";
