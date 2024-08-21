@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import hashPassword from "../middlewares/hashPassword.js";
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
@@ -57,6 +58,8 @@ const userSchema = new Schema({
     default: Date.now,
   },
 });
+
+userSchema.pre("save", hashPassword);
 
 // userSchema.index(
 //   { username: 1 },
