@@ -140,7 +140,7 @@ export const login = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ error: "Invalid email or password" });
 
-    const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     res.cookie("token", token, { httpOnly: true });
@@ -160,7 +160,7 @@ export const getProfile = async (req, res) => {
   if (!token) return res.status(401).json({ error: "Unauthorized" });
 
   try {
-    const verified = jwt.verify(token, "your_jwt_secret");
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
     res.json({
       message: "You are authorized to this protected route",
       userId: verified.id,
