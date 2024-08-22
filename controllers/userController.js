@@ -20,7 +20,8 @@ export const getUsers = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const {
-      username,
+      firstname,
+      lastname,
       email,
       password,
       profilePicture,
@@ -34,14 +35,15 @@ export const createUser = async (req, res) => {
     const found = await User.findOne({ email });
     if (found) throw new Error("User already exist");
 
-    if (!username || !email || !password) {
+    if (!firstname || !email || !password) {
       return res
         .status(400)
-        .json({ error: "Username, email, and password are required" });
+        .json({ error: "firstname, email, and password are required" });
     }
 
     const newUser = new User({
-      username,
+      firstname,
+      lastname,
       email,
       password,
       profilePicture,
@@ -83,7 +85,8 @@ export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      username,
+      firstname,
+      lastname,
       email,
       password,
       profilePicture,
@@ -94,7 +97,7 @@ export const updateUser = async (req, res) => {
       messages,
     } = req.body;
 
-    if (!username || !email || !password) {
+    if (!firstname || !email || !password) {
       return res
         .status(400)
         .json({ error: "Username, email, and password are required" });
@@ -103,7 +106,8 @@ export const updateUser = async (req, res) => {
     const user = await User.findById(id);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    user.username = username;
+    user.firstname = firstname;
+    user.lastname = lastname;
     user.email = email;
     user.password = password;
     user.profilePicture = profilePicture;
