@@ -167,8 +167,10 @@ export const logout = (req, res) => {
 };
 
 export const getProfile = async (req, res) => {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).json({ error: "Unauthorized" });
+  // const token = req.cookies.token;
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token)
+    return res.status(401).json({ error: "Unauthorized, token not found" });
 
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
