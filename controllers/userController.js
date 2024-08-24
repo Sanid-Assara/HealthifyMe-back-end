@@ -178,8 +178,9 @@ export const getProfile = async (req, res) => {
       message: "You are authorized to this protected route",
       userId: verified.id,
       email: verified.email,
+      token: token,
     });
   } catch (error) {
-    res.status(401).json({ error: "Unauthorized" });
+    res.status(401).json({ error: "Unauthorized", token: token });
   }
 };
