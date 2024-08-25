@@ -10,7 +10,7 @@ export const getRecipes = async (req, res) => {
       })
       .populate({
         path: "addedBy",
-        select: "username profilePicture",
+         select: "profilePicture firstname lastname email dietaryPreferences location",
       });
     res.json(recipes);
   } catch (error) {
