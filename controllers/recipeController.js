@@ -71,8 +71,14 @@ export const getRecipe = async (req, res) => {
   try {
     const { id } = req.params;
     const recipe = await Recipe.findById(id)
-      .populate("ingredients.foodItem", "name")
-      .populate("addedBy", "username");
+      .populate({
+        path: "ingredients.foodItem",
+        select: "name imageUrl",
+      })
+      .populate({
+        path: "addedBy",
+         select: "profilePicture firstname lastname email dietaryPreferences location",
+      });
     if (!recipe) return res.status(404).json({ error: "Recipe not found" });
     res.status(200).json(recipe);
   } catch (error) {
