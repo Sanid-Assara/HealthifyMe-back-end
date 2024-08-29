@@ -69,10 +69,7 @@ const recipeSchema = new Schema({
     ref: "User",
     required: true,
   },
-  sharedWithCommunity: {
-    type: Boolean,
-    default: false,
-  },
+
   createdAt: {
     type: Date,
     default: Date.now,
