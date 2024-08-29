@@ -10,7 +10,8 @@ export const getRecipes = async (req, res) => {
       })
       .populate({
         path: "addedBy",
-         select: "profilePicture firstname lastname email dietaryPreferences location",
+        select:
+          "profilePicture firstname lastname email dietaryPreferences location",
       });
     res.json(recipes);
   } catch (error) {
@@ -29,7 +30,6 @@ export const createRecipe = async (req, res) => {
       nutritionalInfo,
       dietaryTags,
       addedBy,
-      sharedWithCommunity,
     } = req.body;
 
     if (!name || !ingredients || !steps || !nutritionalInfo || !addedBy) {
@@ -57,7 +57,6 @@ export const createRecipe = async (req, res) => {
       nutritionalInfo,
       dietaryTags,
       addedBy,
-      sharedWithCommunity,
     });
 
     const result = await newRecipe.save();
@@ -77,7 +76,8 @@ export const getRecipe = async (req, res) => {
       })
       .populate({
         path: "addedBy",
-         select: "profilePicture firstname lastname email dietaryPreferences location",
+        select:
+          "profilePicture firstname lastname email dietaryPreferences location",
       });
     if (!recipe) return res.status(404).json({ error: "Recipe not found" });
     res.status(200).json(recipe);
@@ -97,7 +97,6 @@ export const updateRecipe = async (req, res) => {
       imageUrl,
       nutritionalInfo,
       dietaryTags,
-      sharedWithCommunity,
     } = req.body;
 
     if (!name || !ingredients || !steps || !nutritionalInfo) {
@@ -125,7 +124,6 @@ export const updateRecipe = async (req, res) => {
     recipe.imageUrl = imageUrl;
     recipe.nutritionalInfo = nutritionalInfo;
     recipe.dietaryTags = dietaryTags;
-    recipe.sharedWithCommunity = sharedWithCommunity;
 
     await recipe.save();
     res.json(recipe);
