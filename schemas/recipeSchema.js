@@ -11,9 +11,9 @@ const recipeSchema = new Schema({
   },
   ingredients: [
     {
-      foodItem: {
+      ingredientItem: {
         type: Schema.Types.ObjectId,
-        ref: "Food",
+        ref: "Ingredient",
         required: true,
       },
       quantity: {
@@ -24,12 +24,18 @@ const recipeSchema = new Schema({
         type: String,
         required: true,
         enum: [
-          "grams",
-          "cups",
-          "tablespoons",
-          "teaspoons",
-          "liters",
-          "milliliters",
+          "Grams",
+          "Ounces",
+          "Cups",
+          "Tablespoons",
+          "Teaspoons",
+          "Liters",
+          "Milliliters",
+          "Pinch",
+          "Pieces",
+          "Slices",
+          "Cloves",
+          "Bunches",
         ],
       },
     },
