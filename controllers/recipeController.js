@@ -1,11 +1,11 @@
 import Recipe from "../models/recipeModel.js";
-import Food from "../models/foodModel.js";
+import Ingredient from "../models/ingredientModel.js";
 
 export const getRecipes = async (req, res) => {
   try {
     let recipes = await Recipe.find()
       .populate({
-        path: "ingredients.foodItem",
+        path: "ingredients.ingredientItem",
         select: "name imageUrl",
       })
       .populate({
@@ -40,10 +40,12 @@ export const createRecipe = async (req, res) => {
     }
 
     for (const ingredient of ingredients) {
-      const foodItem = await Food.findById(ingredient.foodItem);
-      if (!foodItem) {
+      const ingredientItem = await Ingredient.findById(
+        ingredient.ingredientItem
+      );
+      if (!ingredientItem) {
         return res.status(400).json({
-          error: `Food item with ID ${ingredient.foodItem} does not exist`,
+          error: `Ingredient item with ID ${ingredient.ingredientItem} does not exist`,
         });
       }
     }
@@ -71,7 +73,7 @@ export const getRecipe = async (req, res) => {
     const { id } = req.params;
     const recipe = await Recipe.findById(id)
       .populate({
-        path: "ingredients.foodItem",
+        path: "ingredients.ingredientItem",
         select: "name imageUrl",
       })
       .populate({
@@ -106,10 +108,12 @@ export const updateRecipe = async (req, res) => {
     }
 
     for (const ingredient of ingredients) {
-      const foodItem = await Food.findById(ingredient.foodItem);
-      if (!foodItem) {
+      const ingredientItem = await Ingredient.findById(
+        ingredient.ingredientItem
+      );
+      if (!ingredientItem) {
         return res.status(400).json({
-          error: `Food item with ID ${ingredient.foodItem} does not exist`,
+          error: `Ingredient item with ID ${ingredient.ingredientItem} does not exist`,
         });
       }
     }

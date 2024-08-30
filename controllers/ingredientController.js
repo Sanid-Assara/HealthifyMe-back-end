@@ -1,19 +1,19 @@
-import Food from "../models/foodModel.js";
+import Ingredient from "../models/ingredientModel.js";
 
-export const getFoods = async (req, res) => {
+export const getIngredients = async (req, res) => {
   try {
-    let foods;
-    foods = await Food.find().populate({
+    let ingredients;
+    ingredients = await Ingredient.find().populate({
       path: "addedBy",
       select: "username",
     });
-    res.json(foods);
+    res.json(ingredients);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export const createFood = async (req, res) => {
+export const createIngredient = async (req, res) => {
   try {
     const {
       name,
@@ -31,7 +31,7 @@ export const createFood = async (req, res) => {
       });
     }
 
-    const newFood = new Food({
+    const newIngredient = new Ingredient({
       name,
       brand,
       calories,
@@ -41,7 +41,7 @@ export const createFood = async (req, res) => {
       addedBy,
     });
 
-    const result = await newFood.save();
+    const result = await newIngredient.save();
 
     res.status(200).json(result);
   } catch (error) {
@@ -49,18 +49,22 @@ export const createFood = async (req, res) => {
   }
 };
 
-export const getFood = async (req, res) => {
+export const getIngredient = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Food.findById(id).populate("addedBy", "username");
-    if (!result) return res.status(404).json({ error: "Food item not found" });
+    const result = await Ingredient.findById(id).populate(
+      "addedBy",
+      "username"
+    );
+    if (!result)
+      return res.status(404).json({ error: "Ingredient item not found" });
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export const updateFood = async (req, res) => {
+export const updateIngredient = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, brand, calories, macronutrients, dietaryTags, imageUrl } =
@@ -72,30 +76,32 @@ export const updateFood = async (req, res) => {
         .json({ error: "Name, calories, and macronutrients are required" });
     }
 
-    const food = await Food.findById(id);
-    if (!food) return res.status(404).json({ error: "Food item not found" });
+    const ingredient = await Ingredient.findById(id);
+    if (!ingredient)
+      return res.status(404).json({ error: "Ingredient item not found" });
 
-    food.name = name;
-    food.brand = brand;
-    food.calories = calories;
-    food.macronutrients = macronutrients;
-    food.dietaryTags = dietaryTags;
-    food.imageUrl = imageUrl;
+    ingredient.name = name;
+    ingredient.brand = brand;
+    ingredient.calories = calories;
+    ingredient.macronutrients = macronutrients;
+    ingredient.dietaryTags = dietaryTags;
+    ingredient.imageUrl = imageUrl;
 
-    await food.save();
+    await ingredient.save();
 
-    res.json(food);
+    res.json(ingredient);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export const deleteFood = async (req, res) => {
+export const deleteIngredient = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Food.findByIdAndDelete(id);
-    if (!result) return res.status(404).json({ error: "Food item not found" });
-    res.json({ message: "Food item deleted" });
+    const result = await Ingredient.findByIdAndDelete(id);
+    if (!result)
+      return res.status(404).json({ error: "Ingredient item not found" });
+    res.json({ message: "Ingredient item deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -11,9 +11,9 @@ const recipeSchema = new Schema({
   },
   ingredients: [
     {
-      foodItem: {
+      ingredientItem: {
         type: Schema.Types.ObjectId,
-        ref: "Food",
+        ref: "Ingredient",
         required: true,
       },
       quantity: {

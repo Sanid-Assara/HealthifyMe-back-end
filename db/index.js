@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/userModel.js";
-import Food from "../models/foodModel.js";
+import Ingredient from "../models/ingredientModel.js";
 import Recipe from "../models/recipeModel.js";
 
 const connectToDatabase = async () => {
@@ -8,7 +8,7 @@ const connectToDatabase = async () => {
     await mongoose.connect(process.env.MONGO_URI);
     console.log(" Connected to MongoDB!");
     await User.ensureIndexes();
-    await Food.ensureIndexes();
+    await Ingredient.ensureIndexes();
     await Recipe.ensureIndexes();
     console.log(" collections should exist now on Atlas.");
   } catch (error) {
