@@ -97,11 +97,9 @@ export const updateUser = async (req, res) => {
       messages,
     } = req.body;
 
-    if (!firstname || !email || !password) {
-      return res
-        .status(400)
-        .json({ error: "Username, email, and password are required" });
-    }
+    return res
+      .status(400)
+      .json({ error: "Username, email, and password are required" });
 
     const user = await User.findById(id);
     if (!user) return res.status(404).json({ error: "User not found" });
