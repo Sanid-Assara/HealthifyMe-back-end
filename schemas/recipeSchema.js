@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+import validator from "validator";
 const recipeSchema = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   description: {
     type: String,
@@ -19,6 +21,7 @@ const recipeSchema = new Schema({
       quantity: {
         type: Number,
         required: true,
+        min: [0, "Quantity cannot be negative."],
       },
       unit: {
         type: String,
@@ -47,23 +50,28 @@ const recipeSchema = new Schema({
   imageUrl: {
     type: String,
     default: "",
+    validate: [validator.isURL, "Please provide a valid URL"],
   },
   nutritionalInfo: {
     calories: {
       type: Number,
       required: true,
+      min: 0,
     },
     protein: {
       type: Number,
       required: true,
+      min: 0,
     },
     carbs: {
       type: Number,
       required: true,
+      min: 0,
     },
     fat: {
       type: Number,
       required: true,
+      min: 0,
     },
   },
   dietaryTags: {
