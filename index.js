@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
+import { join } from "path";
 import { fileURLToPath } from "url";
 import favicon from "serve-favicon";
 import cors from "cors";
@@ -31,6 +32,7 @@ app.use(
 
 app.use(favicon(path.join(__dirname, "public", "tabicon.png")));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(join(import.meta.dirname, "uploads")));
 
 app.use("/API/users", userRoutes);
 app.use("/API/ingredients", ingredientRoutes);
