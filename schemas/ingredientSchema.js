@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-import validator from "validator";
 const ingredientSchema = new Schema({
   name: {
     type: String,
-    required: [true, "Ingredient name is required."],
+    required: true,
   },
   brand: {
     type: String,
@@ -13,23 +12,19 @@ const ingredientSchema = new Schema({
   calories: {
     type: Number,
     required: true,
-    min: [0, "Calories cannot be negative."],
   },
   macronutrients: {
     protein: {
       type: Number,
       required: true,
-      min: 0,
     },
     carbs: {
       type: Number,
       required: true,
-      min: 0,
     },
     fat: {
       type: Number,
       required: true,
-      min: 0,
     },
   },
   dietaryTags: {
@@ -39,7 +34,6 @@ const ingredientSchema = new Schema({
   imageUrl: {
     type: String,
     default: "",
-    validate: [validator.isURL, "Please provide a valid URL"],
   },
   addedBy: {
     type: Schema.Types.ObjectId,

@@ -1,30 +1,25 @@
 import mongoose from "mongoose";
 import hashPassword from "../middlewares/hashPassword.js";
 import bcrypt from "bcryptjs";
-import validator from "validator";
+
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
   firstname: {
     type: String,
     required: true,
-    unique: true,
-    minlength: [3, "Firstname must be at least 3 characters long"],
   },
   lastname: {
     type: String,
-    minlength: [3, "Lastname must be at least 3 characters long"],
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    validate: [validator.isEmail, "Please provide a valid email"],
   },
   password: {
     type: String,
     required: true,
     // select: false,
-    validate: [5, "Password must be at least 5 characters long"],
   },
   profilePicture: {
     type: String,
