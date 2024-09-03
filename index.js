@@ -10,6 +10,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import userRoutes from "./routes/userRoutes.js";
 import ingredientRoutes from "./routes/ingredientRoutes.js";
 import recipeRoutes from "./routes/recipeRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/API/users", userRoutes);
 app.use("/API/ingredients", ingredientRoutes);
 app.use("/API/recipes", recipeRoutes);
+app.use("/API/upload", uploadRoutes);
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 app.use(errorHandler);
@@ -44,7 +46,7 @@ const startServer = async () => {
 
     app.listen(PORT, () =>
       console.log(
-        `\n Servers are running locally on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/ingredients  \n http://localhost:${PORT}/API/recipes \n http://localhost:8080/API/users/profile \n\n Servers are running online on \n https://healthifyme-api.onrender.com/API/users \n https://healthifyme-api.onrender.com/API/ingredients  \n https://healthifyme-api.onrender.com/API/recipes \n https://healthifyme-api.onrender.com/API/profile`
+        `\n Servers are running locally on \n http://localhost:${PORT}/API/users \n http://localhost:${PORT}/API/ingredients  \n http://localhost:${PORT}/API/recipes \n http://localhost:8080/API/users/profile \n http://localhost:8080/API/users/upload \n\n Servers are running online on \n https://healthifyme-api.onrender.com/API/users \n https://healthifyme-api.onrender.com/API/ingredients  \n https://healthifyme-api.onrender.com/API/recipes \n https://healthifyme-api.onrender.com/API/profile  \n https://healthifyme-api.onrender.com/API/upload`
       )
     );
   } catch (error) {
